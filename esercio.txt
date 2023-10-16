@@ -1,0 +1,37 @@
+//ESERCIZIO 1 : ESTRAI NOME E COGNOME DEI CLIENTI NATI NEL 1982:
+
+select name,surname from public."Clienti"
+WHERE extract(YEAR FROM data_nascita)=1982
+
+
+
+//ESERCIZIO 2: ESTRAI IL NUMERO DI FATTURE CON IVA AL 20%:
+
+select count(*) as numero_fatture_iva_20 from public."Fatture"
+where iva=20
+
+
+//ESERCIZIO 3 : RIPORTARE IL NUMERO DI FATTURE E IL TOTALE DEGLI IMPORTI DIVISI PER ANNO DI FATTURAZIONE:
+
+select extract(YEAR FROM data_fattura),count(*) as n_fatture, sum(importo) as totale_fatture from public."Fatture"
+group by extract(YEAR FROM data_fattura)
+
+//ESERCIZIO 4 : ESTRARRE I PRODOTTI ATTIVATI NEL 2017 CHE SONO IN PRODUZIONE OPPURE IN COMMERCIO:
+
+SELECT * FROM public."Prodotti"
+where extract(YEAR FROM data_attivazione)=2017 and (produzione=true or commercio=true)
+
+//ESERCIZIO 5 ESTRARRE IL NUMERO DI FATTURE PER ANNO CON IVA AL 20%:
+
+
+select extract(YEAR FROM data_fattura),count(*) as n_fatture from public."Fatture"
+where iva=20
+group by extract(YEAR FROM data_fattura)
+
+
+//ESERCIZIO 6: ESTRARRE GLI ANNI IN CUI CI SONO PIU DI 2 FATTURE DI TIPOLOGIA A:
+
+select  extract(YEAR FROM data_fattura), count(*) from public."Fatture"
+where tipologia='A'
+group by extract(YEAR FROM data_fattura)
+
