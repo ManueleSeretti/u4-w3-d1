@@ -34,4 +34,25 @@ group by extract(YEAR FROM data_fattura)
 select  extract(YEAR FROM data_fattura), count(*) from public."Fatture"
 where tipologia='A'
 group by extract(YEAR FROM data_fattura)
+having count(*)>2
+
+//ESERCIZIO 7: ESTRARRE IL NOME DEI FORNITORI NELL'ELENCO DELLE FATTURE
+
+select id_fattura,importo,iva ,data_fattura, denominazione  from public."Fatture"
+join public."Fornitori" using(id_fornitore)
+
+
+
+//ESERCIZIO 8 : ESTRARRE IL TOTALE DEGLI IMPORTI DELLE FATTURE DIVISE PER RESIDENZA DEI CLIENTI
+
+SELECT sum(importo) from public."Fatture" 
+join public."Clienti" using(id_cliente)
+group by regione
+
+//ESERCIZIO 9 : ESTRARRE IL NUMERO DI CLIENTI NATI NEL 1980 CON ALMENO UNA FATTURA SOPREA I 50 EURO
+
+SELECT COUNT(DISTINCT id_cliente)
+FROM public."Clienti"
+JOIN public."Fatture" using(id_cliente)
+WHERE EXTRACT(YEAR FROM data_di_nascita)=1980 AND importo>50
 
